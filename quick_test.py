@@ -14,14 +14,14 @@ def crear_imagenes_prueba():
     try:
         from PIL import Image, ImageDraw, ImageFont
     except ImportError:
-        print("❌ Pillow no está instalado. Instala con: pip install Pillow")
+        print("Pillow no está instalado. Instala con: pip install Pillow")
         return False
     
     # Crear directorio de prueba
     test_dir = Path("images_test")
     test_dir.mkdir(exist_ok=True)
     
-    print(f"📁 Creando imágenes de prueba en '{test_dir}'...")
+    print(f"Creando imágenes de prueba en '{test_dir}'...")
     
     # Colores y textos para diferentes imágenes
     ejemplos = [
@@ -58,9 +58,9 @@ def crear_imagenes_prueba():
         # Guardar imagen
         filepath = test_dir / ejemplo["nombre"]
         img.save(filepath)
-        print(f"   ✅ Creada: {filepath}")
+        print(f"   Creada: {filepath}")
     
-    print(f"\n✅ {len(ejemplos)} imágenes de prueba creadas en '{test_dir}'")
+    print(f"\n{len(ejemplos)} imágenes de prueba creadas en '{test_dir}'")
     return True
 
 
@@ -75,19 +75,19 @@ def probar_clasificacion():
     try:
         from classify_images_with_ollama import OllamaImageClassifier
     except ImportError:
-        print("\n❌ No se puede importar OllamaImageClassifier")
+        print("\nNo se puede importar OllamaImageClassifier")
         print("   Asegúrate de que classify_images_with_ollama.py esté en el directorio")
         return False
     
     # Crear clasificador
-    print("\n1️⃣ Creando clasificador...")
+    print("\n1⃣ Creando clasificador...")
     classifier = OllamaImageClassifier()
     
     # Verificar conexión
-    print("\n2️⃣ Verificando conexión con Ollama...")
+    print("\n2⃣ Verificando conexión con Ollama...")
     if not classifier.check_connection():
-        print("\n❌ No se puede conectar con Ollama")
-        print("\n💡 Para ejecutar esta prueba:")
+        print("\nNo se puede conectar con Ollama")
+        print("\nPara ejecutar esta prueba:")
         print("   1. Inicia Ollama: ollama serve")
         print("   2. Instala un modelo: ollama pull gemma3:27b-it-qat")
         print("   3. Ejecuta este script nuevamente")
@@ -96,13 +96,13 @@ def probar_clasificacion():
     # Verificar que existan imágenes
     test_dir = Path("images_test")
     if not test_dir.exists() or not list(test_dir.glob("*.png")):
-        print(f"\n📁 No hay imágenes en '{test_dir}'")
+        print(f"\nNo hay imágenes en '{test_dir}'")
         print("   Creando imágenes de prueba...")
         if not crear_imagenes_prueba():
             return False
     
     # Clasificar las imágenes
-    print("\n3️⃣ Clasificando imágenes de prueba...")
+    print("\n3⃣ Clasificando imágenes de prueba...")
     print("   Este proceso puede tomar 1-2 minutos...")
     
     prompt = """Analiza esta imagen y describe:
@@ -120,11 +120,11 @@ Responde en JSON con: {"color": "...", "texto": "...", "descripcion": "..."}"""
     
     # Mostrar resumen
     print("\n" + "="*70)
-    print("📊 RESUMEN DE LA PRUEBA")
+    print("RESUMEN DE LA PRUEBA")
     print("="*70)
     
     if not results:
-        print("❌ No se obtuvieron resultados")
+        print("No se obtuvieron resultados")
         return False
     
     successful = sum(1 for r in results if r.get('error') is None)
@@ -133,8 +133,8 @@ Responde en JSON con: {"color": "...", "texto": "...", "descripcion": "..."}"""
     print(f"Errores: {len(results) - successful}")
     
     if successful > 0:
-        print("\n✅ ¡PRUEBA EXITOSA!")
-        print("💡 Resultados guardados en 'test_classification_results.json'")
+        print("\n¡PRUEBA EXITOSA!")
+        print("Resultados guardados en 'test_classification_results.json'")
         print("\nEjemplo de clasificación:")
         for result in results[:1]:  # Mostrar solo el primero
             print(f"\n  Archivo: {result['file']}")
@@ -143,8 +143,8 @@ Responde en JSON con: {"color": "...", "texto": "...", "descripcion": "..."}"""
                 classification = classification[:200] + "..."
             print(f"  Clasificación: {classification}")
     else:
-        print("\n❌ Todas las clasificaciones fallaron")
-        print("💡 Revisa los errores en los resultados")
+        print("\nTodas las clasificaciones fallaron")
+        print("Revisa los errores en los resultados")
     
     print("\n" + "="*70)
     return successful > 0
@@ -167,27 +167,27 @@ def main():
     try:
         opcion = input("\nSelecciona una opción (0-3): ").strip()
     except KeyboardInterrupt:
-        print("\n\n👋 Cancelado")
+        print("\n\nCancelado")
         return
     
     if opcion == "0":
-        print("\n👋 ¡Hasta luego!")
+        print("\n¡Hasta luego!")
         return
     elif opcion == "1":
         crear_imagenes_prueba()
-        print("\n💡 Para clasificar estas imágenes, ejecuta:")
+        print("\nPara clasificar estas imágenes, ejecuta:")
         print("   python quick_test.py")
         print("   y selecciona opción 3")
     elif opcion == "2":
         crear_imagenes_prueba()
-        print("\n⏳ Esperando 2 segundos antes de clasificar...")
+        print("\nEsperando 2 segundos antes de clasificar...")
         import time
         time.sleep(2)
         probar_clasificacion()
     elif opcion == "3":
         probar_clasificacion()
     else:
-        print("\n❌ Opción no válida")
+        print("\nOpción no válida")
 
 
 if __name__ == "__main__":

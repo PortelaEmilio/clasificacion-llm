@@ -72,7 +72,8 @@ test_*.json
 
 # No ignorar archivos importantes
 !requirements.txt
-!prompt_18.txt
+!prompt_sistema-clasificacion-tridimensional.txt
+!prompt_capital-erotico.txt
 !README.md
 !QUICKSTART.md
 !ADVANCED_PROMPTS.md

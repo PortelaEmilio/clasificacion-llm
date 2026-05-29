@@ -1,6 +1,6 @@
 # Guía Rápida: Clasificación de Imágenes y Textos
 
-## 🚀 Inicio Rápido en 3 Pasos
+## Inicio Rápido en 3 Pasos
 
 ### Para Clasificación de Imágenes
 
@@ -36,10 +36,11 @@
 
 3. **Ejecutar el script**
    ```bash
-   python classify_with_gpt.py
+   # Con tu propio dataset (CSV con una columna 'frase')
+   python classify_with_gpt.py --input mi_dataset.csv
    ```
 
-## 📝 Casos de Uso Comunes
+## Casos de Uso Comunes
 
 ### Caso 1: Clasificar todas las imágenes de una carpeta
 
@@ -102,7 +103,7 @@ classifier = OllamaImageClassifier(
 # Usar el clasificador normalmente
 ```
 
-## 🎨 Ejemplos de Prompts para Imágenes
+## Ejemplos de Prompts para Imágenes
 
 ### Descripción General
 ```python
@@ -156,7 +157,7 @@ prompt = """Analiza el estilo visual de esta imagen:
 - Tratamiento de color (vibrante, monocromático, pastel, etc.)"""
 ```
 
-## ⚡ Consejos de Rendimiento
+## Consejos de Rendimiento
 
 1. **Procesamiento por lotes**: Usa `process_directory()` en lugar de múltiples llamadas a `classify_single_image()`
 
@@ -171,7 +172,7 @@ prompt = """Analiza el estilo visual de esta imagen:
 
 5. **Memoria**: El script limpia automáticamente la memoria después de cada imagen
 
-## 🐛 Solución de Problemas Comunes
+## Solución de Problemas Comunes
 
 ### "No se puede conectar con Ollama"
 - Verifica que el servidor esté corriendo: `ps aux | grep ollama`
@@ -191,14 +192,14 @@ prompt = """Analiza el estilo visual de esta imagen:
 - Procesa menos imágenes a la vez
 - Reduce el tamaño de las imágenes antes de procesarlas
 
-## 📚 Recursos Adicionales
+## Recursos Adicionales
 
 - [Documentación completa](README.md)
 - [Ejemplos interactivos](example_usage.py)
 - [Documentación de Ollama](https://ollama.ai/docs)
 - [Modelos disponibles](https://ollama.ai/library)
 
-## 💡 Próximos Pasos
+## Próximos Pasos
 
 1. Lee el [README.md](README.md) completo para más detalles
 2. Ejecuta `python example_usage.py` para ver ejemplos interactivos

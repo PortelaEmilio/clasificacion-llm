@@ -57,28 +57,28 @@ class OllamaImageClassifier:
     def check_connection(self) -> bool:
         """Verifica si Ollama está funcionando y el modelo está disponible"""
         try:
-            print("🔍 Verificando conexión con Ollama...")
+            print("Verificando conexión con Ollama...")
             response = requests.get(f"{self.ollama_url}/api/tags", timeout=10)
             if response.status_code == 200:
                 models = response.json().get("models", [])
                 model_names = [model["name"] for model in models]
-                print(f"✅ Conexión exitosa. Modelos disponibles: {model_names}")
+                print(f"Conexión exitosa. Modelos disponibles: {model_names}")
                 
                 if self.model_name in model_names:
-                    print(f"✅ Modelo {self.model_name} encontrado")
+                    print(f"Modelo {self.model_name} encontrado")
                     return True
                 else:
-                    print(f"⚠️ Advertencia: Modelo {self.model_name} no encontrado")
+                    print(f"Advertencia: Modelo {self.model_name} no encontrado")
                     print("Modelos disponibles:")
                     for name in model_names:
                         print(f"  - {name}")
                     return False
             else:
-                print(f"❌ Error de conexión: HTTP {response.status_code}")
+                print(f"Error de conexión: HTTP {response.status_code}")
                 return False
         except Exception as e:
-            print(f"❌ No se pudo conectar con Ollama: {str(e)}")
-            print("💡 Sugerencias:")
+            print(f"No se pudo conectar con Ollama: {str(e)}")
+            print("Sugerencias:")
             print(f"  - Verificar que Ollama esté ejecutándose: ollama serve")
             print(f"  - Verificar que el modelo esté instalado: ollama pull {self.model_name}")
             return False
@@ -174,16 +174,16 @@ class OllamaImageClassifier:
                 )
                 if response.status_code == 200:
                     result = response.json()["response"].strip()
-                    print(f"    ✅ Respuesta recibida exitosamente")
+                    print(f"    Respuesta recibida exitosamente")
                     return result
                 else:
-                    print(f"    ❌ Error HTTP {response.status_code}: {response.text}")
+                    print(f"    Error HTTP {response.status_code}: {response.text}")
             except Exception as e:
-                print(f"    ❌ Error en intento {attempt + 1}: {str(e)}")
+                print(f"    Error en intento {attempt + 1}: {str(e)}")
                 if attempt == max_retries - 1:
-                    print(f"    🚫 Error después de {max_retries} intentos: {str(e)}")
+                    print(f"    Error después de {max_retries} intentos: {str(e)}")
                     return None
-                print(f"    ⏳ Esperando {2 ** attempt} segundos antes del siguiente intento...")
+                print(f"    Esperando {2 ** attempt} segundos antes del siguiente intento...")
                 time.sleep(2 ** attempt)
         
         return None
@@ -210,7 +210,7 @@ class OllamaImageClassifier:
         directory_path = Path(directory_path)
         
         if not directory_path.exists():
-            print(f"❌ Error: El directorio '{directory_path}' no existe")
+            print(f"Error: El directorio '{directory_path}' no existe")
             return []
         
         # Obtener lista de archivos de imagen
@@ -220,10 +220,10 @@ class OllamaImageClassifier:
                 image_files.append(file)
         
         if not image_files:
-            print(f"❌ Error: No se encontraron imágenes en '{directory_path}'")
+            print(f"Error: No se encontraron imágenes en '{directory_path}'")
             return []
         
-        print(f"🔄 Se encontraron {len(image_files)} imágenes para procesar")
+        print(f"Se encontraron {len(image_files)} imágenes para procesar")
         print(f"Archivos: {[f.name for f in image_files]}")
         
         results = []
@@ -232,14 +232,14 @@ class OllamaImageClassifier:
         for i, image_path in enumerate(image_files, 1):
             filename = image_path.name
             print(f"\n{'='*60}")
-            print(f"📸 PROCESANDO IMAGEN {i}/{len(image_files)}: {filename}")
+            print(f"PROCESANDO IMAGEN {i}/{len(image_files)}: {filename}")
             print('='*60)
             
             # Cargar imagen y convertir a base64
             base64_img = self.load_local_image_as_base64(image_path)
             
             if not base64_img:
-                print(f"❌ Error: No se pudo cargar la imagen {filename}")
+                print(f"Error: No se pudo cargar la imagen {filename}")
                 result = {
                     "file": filename,
                     "path": str(image_path),
@@ -250,18 +250,18 @@ class OllamaImageClassifier:
                 results.append(result)
                 continue
             
-            print("✅ Imagen cargada exitosamente")
-            print("🔄 Clasificando imagen con modelo...")
-            print("⏳ Este proceso puede tomar varios segundos...")
+            print("Imagen cargada exitosamente")
+            print("Clasificando imagen con modelo...")
+            print("Este proceso puede tomar varios segundos...")
             
             # Clasificar imagen
             response = self.classify_image(base64_img, prompt)
             
             if response:
-                print(f"\n📊 RESULTADO:")
+                print(f"\nRESULTADO:")
                 print(f"{response[:200]}..." if len(response) > 200 else response)
             else:
-                print(f"\n❌ No se pudo obtener respuesta del modelo")
+                print(f"\nNo se pudo obtener respuesta del modelo")
             
             # Crear resultado
             result = {
@@ -283,9 +283,9 @@ class OllamaImageClassifier:
         try:
             with open(output_file, 'w', encoding='utf-8') as f:
                 json.dump(results, f, ensure_ascii=False, indent=4)
-            print(f"\n💾 Resultados guardados en '{output_file}'")
+            print(f"\nResultados guardados en '{output_file}'")
         except Exception as e:
-            print(f"\n❌ Error guardando resultados: {str(e)}")
+            print(f"\nError guardando resultados: {str(e)}")
     
     def classify_single_image(self, image_source: Union[str, Path], 
                             prompt: str,
@@ -302,32 +302,32 @@ class OllamaImageClassifier:
             Respuesta del modelo o None si falla
         """
         print(f"\n{'='*60}")
-        print(f"📸 CLASIFICANDO IMAGEN: {image_source}")
+        print(f"CLASIFICANDO IMAGEN: {image_source}")
         print('='*60)
         
         # Cargar imagen
         if is_url:
-            print("🌐 Descargando imagen desde URL...")
+            print("Descargando imagen desde URL...")
             base64_img = self.download_image_as_base64(str(image_source))
         else:
-            print("📂 Cargando imagen desde archivo local...")
+            print("Cargando imagen desde archivo local...")
             base64_img = self.load_local_image_as_base64(image_source)
         
         if not base64_img:
-            print("❌ Error cargando imagen")
+            print("Error cargando imagen")
             return None
         
-        print("✅ Imagen cargada exitosamente")
-        print("🔄 Clasificando imagen...")
+        print("Imagen cargada exitosamente")
+        print("Clasificando imagen...")
         
         # Clasificar
         response = self.classify_image(base64_img, prompt)
         
         if response:
-            print(f"\n📊 RESULTADO:")
+            print(f"\nRESULTADO:")
             print(response)
         else:
-            print(f"\n❌ No se pudo obtener respuesta del modelo")
+            print(f"\nNo se pudo obtener respuesta del modelo")
         
         return response
 
@@ -369,8 +369,8 @@ def main():
     
     # Verificar conexión
     if not classifier.check_connection():
-        print("\n❌ No se puede continuar sin conexión con Ollama")
-        print("\n💡 Para iniciar Ollama:")
+        print("\nNo se puede continuar sin conexión con Ollama")
+        print("\nPara iniciar Ollama:")
         print("   1. En una terminal: ollama serve")
         print(f"   2. Instalar el modelo: ollama pull {DEFAULT_MODEL}")
         return
@@ -387,12 +387,12 @@ def main():
     
     # Crear directorio de ejemplo si no existe
     if not Path(directory).exists():
-        print(f"\n📁 El directorio '{directory}' no existe.")
+        print(f"\nEl directorio '{directory}' no existe.")
         create_dir = input("¿Deseas crearlo? (s/n): ").strip().lower()
         if create_dir == 's':
             Path(directory).mkdir(parents=True, exist_ok=True)
-            print(f"✅ Directorio '{directory}' creado.")
-            print(f"💡 Coloca imágenes en este directorio y ejecuta el script nuevamente.")
+            print(f"Directorio '{directory}' creado.")
+            print(f"Coloca imágenes en este directorio y ejecuta el script nuevamente.")
         return
     
     # Usar prompt del repositorio si existe (fallback a create_example_prompt)
@@ -400,12 +400,12 @@ def main():
     if prompt_path.exists():
         try:
             prompt = prompt_path.read_text(encoding='utf-8')
-            print(f"✅ Usando prompt de archivo: {prompt_path}")
+            print(f"Usando prompt de archivo: {prompt_path}")
         except Exception as e:
-            print(f"⚠️ No se pudo leer {prompt_path}: {e}. Usando prompt por defecto.")
+            print(f"No se pudo leer {prompt_path}: {e}. Usando prompt por defecto.")
             prompt = create_example_prompt()
     else:
-        print("⚠️ No se encontró 'prompt_capital-erotico.txt' en el repositorio. Usando prompt por defecto.")
+        print("No se encontró 'prompt_capital-erotico.txt' en el repositorio. Usando prompt por defecto.")
         prompt = create_example_prompt()
     
     # Procesar directorio
@@ -417,7 +417,7 @@ def main():
     
     # Mostrar resumen
     print("\n" + "="*70)
-    print("📊 RESUMEN DE RESULTADOS")
+    print("RESUMEN DE RESULTADOS")
     print("="*70)
     print(f"Total de imágenes procesadas: {len(results)}")
     successful = sum(1 for r in results if r.get('error') is None)

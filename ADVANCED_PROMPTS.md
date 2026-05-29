@@ -2,7 +2,7 @@
 
 Esta guía contiene ejemplos de prompts especializados para diferentes casos de uso en clasificación de imágenes.
 
-## 📊 Análisis de Datos Visuales
+## Análisis de Datos Visuales
 
 ### Gráficos y Visualizaciones
 ```python
@@ -39,7 +39,7 @@ Identifica:
 Proporciona una descripción estructurada."""
 ```
 
-## 🏞️ Análisis de Escenas y Ambientes
+## Análisis de Escenas y Ambientes
 
 ### Fotografía de Paisajes
 ```python
@@ -73,7 +73,7 @@ Analiza:
 Proporciona una descripción detallada."""
 ```
 
-## 👤 Análisis de Personas e Interacciones
+## Análisis de Personas e Interacciones
 
 ### Expresiones Faciales
 ```python
@@ -86,7 +86,7 @@ Para cada persona visible:
 4. Dirección de la mirada
 5. Contexto de la expresión
 
-⚠️ Si no hay personas, indica "No hay personas en la imagen"
+Si no hay personas, indica "No hay personas en la imagen"
 
 Responde en JSON."""
 ```
@@ -106,7 +106,7 @@ Para cada persona:
 Formato JSON con detalles."""
 ```
 
-## 🔍 Análisis Técnico
+## Análisis Técnico
 
 ### Calidad de Imagen
 ```python
@@ -141,7 +141,7 @@ Analiza e infiere:
 Base tus inferencias en evidencia visual."""
 ```
 
-## 🎨 Análisis Artístico y Creativo
+## Análisis Artístico y Creativo
 
 ### Estilo Artístico
 ```python
@@ -176,7 +176,7 @@ Analiza:
 Formato JSON con justificaciones."""
 ```
 
-## 🏢 Análisis de Documentos
+## Análisis de Documentos
 
 ### Documentos Escaneados
 ```python
@@ -191,7 +191,7 @@ Extrae:
 6. Elementos estructurales (logo, firma, sello, etc.)
 7. Calidad del escaneo
 
-⚠️ No incluyas información personal específica, solo el tipo de información."""
+No incluyas información personal específica, solo el tipo de información."""
 ```
 
 ### Capturas de Pantalla
@@ -210,7 +210,7 @@ Identifica:
 Proporciona descripción estructurada."""
 ```
 
-## 🛍️ Análisis Comercial
+## Análisis Comercial
 
 ### Productos
 ```python
@@ -246,11 +246,11 @@ Evalúa:
 Proporciona análisis detallado."""
 ```
 
-## 🔬 Análisis Especializado
+## Análisis Especializado
 
 ### Imágenes Médicas (Uso Educativo)
 ```python
-prompt = """⚠️ Solo para fines educativos y demostración.
+prompt = """Solo para fines educativos y demostración.
 
 Describe esta imagen de naturaleza médica o científica:
 
@@ -259,8 +259,8 @@ Describe esta imagen de naturaleza médica o científica:
 3. Características destacadas
 4. Contexto educativo
 
-⚠️ NO proporciones diagnósticos médicos.
-⚠️ Solo descripciones anatómicas generales."""
+NO proporciones diagnósticos médicos.
+Solo descripciones anatómicas generales."""
 ```
 
 ### Naturaleza y Vida Silvestre
@@ -278,7 +278,7 @@ Para cada organismo visible:
 Formato estructurado con nivel de confianza para identificaciones."""
 ```
 
-## 🎯 Prompts Multi-Propósito
+## Prompts Multi-Propósito
 
 ### Análisis Completo
 ```python
@@ -313,7 +313,7 @@ Secciones:
 Proporciona respuesta JSON estructurada."""
 ```
 
-## 💡 Consejos para Crear Prompts Efectivos
+## Consejos para Crear Prompts Efectivos
 
 1. **Sé específico**: Define exactamente qué información necesitas
 2. **Usa estructura**: Organiza el prompt con secciones numeradas o bullets
@@ -323,7 +323,7 @@ Proporciona respuesta JSON estructurada."""
 6. **Solicita confianza**: Pide nivel de certeza en identificaciones
 7. **Maneja errores**: Incluye instrucciones para casos edge (ej: "si no hay personas...")
 
-## 🔄 Prompts Adaptables
+## Prompts Adaptables
 
 ### Template Genérico
 ```python
@@ -354,7 +354,7 @@ prompt = crear_prompt_personalizado(
 )
 ```
 
-## 📚 Referencias
+## Referencias
 
 - Para más información sobre ingeniería de prompts: [OpenAI Prompt Engineering Guide](https://platform.openai.com/docs/guides/prompt-engineering)
 - Ejemplos de la comunidad: [Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts)

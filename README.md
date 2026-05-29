@@ -1,138 +1,126 @@
-# 🤖 Clasificación Automática con LLMs
+<div align="center">
+
+# Clasificación Automática con LLMs
+
+Clasificación automática de **textos** e **imágenes** mediante modelos de lenguaje grandes.
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Sistema completo para clasificación automática de **textos** e **imágenes** utilizando modelos de lenguaje grandes (LLMs):
+</div>
 
-- **OpenAI GPT-4o-mini** - Para clasificación de texto
-- **Ollama** con modelos de visión - Para clasificación de imágenes
+---
 
-## 📋 Características
+## Características
 
-- ✅ Clasificación de texto con OpenAI
-- ✅ Clasificación de imágenes con Ollama (modelos locales)
-- ✅ Procesamiento por lotes de directorios completos
-- ✅ Soporte para múltiples formatos de imagen
-- ✅ Sistema de verificación automática
-- ✅ Ejemplos interactivos incluidos
-- ✅ Documentación completa
+| Capacidad | Detalle |
+|-----------|---------|
+| Clasificación de texto | OpenAI GPT-4o-mini |
+| Clasificación de imágenes | Ollama con modelos de visión (local) |
+| Procesamiento por lotes | Directorios completos de imágenes |
+| Formatos de imagen | JPG, JPEG, PNG, WEBP, BMP, GIF |
+| Evaluación | Métricas opcionales frente a etiquetas manuales |
+| Verificación | Script de diagnóstico del entorno |
 
-## 🚀 Inicio Rápido
-
-### 1. Instalación
+## Instalación
 
 ```bash
-# Clonar el repositorio
 git clone https://github.com/tu-usuario/clasificacion-llms.git
 cd clasificacion-llms
-
-# Instalar dependencias
 pip install -r requirements.txt
 ```
 
-### 2. Configuración
+## Configuración
 
-**Para clasificación de texto (OpenAI):**
+**Clasificación de texto (OpenAI)**
+
 ```bash
-# Copiar plantilla de configuración
 cp .env.example .env
-
-# Editar .env y añadir tu API key de OpenAI
+# Edita .env y añade tu clave:
 # OPENAI_API_KEY=tu-api-key-aqui
 ```
 
-Obtén tu API key en: https://platform.openai.com/api-keys
+Obtén tu API key en https://platform.openai.com/api-keys
 
-**Para clasificación de imágenes (Ollama):**
+**Clasificación de imágenes (Ollama)**
+
 ```bash
-# Instalar Ollama (visita https://ollama.ai para instrucciones)
-
-# Iniciar servidor
-ollama serve
-
-# Instalar modelo de visión (en otra terminal)
-ollama pull gemma3:27b-it-qat
+# Instala Ollama desde https://ollama.ai
+ollama serve                      # inicia el servidor
+ollama pull gemma3:27b-it-qat     # instala un modelo de visión (otra terminal)
 ```
 
-### 3. Verificar Instalación
+## Verificar instalación
 
 ```bash
 python check_installation.py
 ```
 
-Este script verifica:
-- ✅ Versión de Python
-- ✅ Dependencias instaladas
-- ✅ Configuración de APIs
-- ✅ Servidor Ollama (si aplica)
+Comprueba la versión de Python, las dependencias, la configuración de la API y el servidor de Ollama.
 
-## � Uso
+## Uso
 
-### Clasificación de Texto con GPT-4o-mini
+### Clasificación de texto con GPT-4o-mini
 
-1. Asegúrate de tener el archivo `prompt_18.txt` en el directorio
-2. Configura tu API key de OpenAI
-3. Ejecuta el script:
-   ```bash
-   python classify_with_gpt.py
-   ```
+El script `classify_with_gpt.py` clasifica frases en tres dimensiones (sense, reference, attribution).
 
-El script cargará el dataset, clasificará las frases y generará métricas de evaluación.
+```bash
+# Clasificar tu propio dataset (CSV con una columna 'frase')
+python classify_with_gpt.py --input mi_dataset.csv
 
-### Clasificación de Imágenes con Ollama
+# Clasificar y evaluar el desempeño frente a etiquetas manuales
+python classify_with_gpt.py --input mi_dataset.csv --validate
+```
 
-#### Opción 1: Uso Interactivo
+Opciones principales:
+
+| Flag | Descripción |
+|------|-------------|
+| `--input`, `-i` | CSV de entrada con una columna `frase`. |
+| `--output`, `-o` | CSV de salida (por defecto `gpt_classification_results.csv`). |
+| `--prompt`, `-p` | Archivo de prompt (por defecto `prompt_sistema-clasificacion-tridimensional.txt`). |
+| `--validate` | Evalúa frente a las columnas `sense_manual`, `reference_manual`, `attribution_manual`. |
+
+Las columnas `*_manual` son **opcionales**: solo se necesitan al usar `--validate`.
+
+### Clasificación de imágenes con Ollama
+
+**Uso interactivo**
+
 ```bash
 python classify_images_with_ollama.py
 ```
 
-El script te guiará para:
-- Verificar la conexión con Ollama
-- Seleccionar un directorio con imágenes
-- Procesar todas las imágenes del directorio
-
-#### Opción 2: Uso Programático
+**Uso programático**
 
 ```python
 from classify_images_with_ollama import OllamaImageClassifier
 
-# Crear clasificador
 classifier = OllamaImageClassifier(
     model_name="gemma3:27b-it-qat",
     ollama_url="http://localhost:11434"
 )
 
-# Verificar conexión
 if classifier.check_connection():
-    
-    # Clasificar una sola imagen desde archivo local
-    prompt = """Describe this image in detail, identifying the main subject, 
-    setting, and notable features."""
-    
+    # Una sola imagen local
     result = classifier.classify_single_image(
         image_source="path/to/image.jpg",
-        prompt=prompt,
+        prompt="Describe this image in detail.",
         is_url=False
     )
     print(result)
-    
-    # Procesar un directorio completo
+
+    # Un directorio completo
     results = classifier.process_directory(
         directory_path="images_folder",
-        prompt=prompt,
+        prompt="Describe this image in detail.",
         output_file="results.json"
     )
 ```
 
-#### Opción 3: Clasificar desde URL
+**Desde una URL**
 
 ```python
-from classify_images_with_ollama import OllamaImageClassifier
-
-classifier = OllamaImageClassifier()
-
-# Clasificar imagen desde URL
 result = classifier.classify_single_image(
     image_source="https://example.com/image.jpg",
     prompt="Describe this image",
@@ -140,23 +128,14 @@ result = classifier.classify_single_image(
 )
 ```
 
-## 📊 Resultados
+## Resultados
 
-### Clasificación de Texto
-El script genera:
-- Precisión, recall, F1-score
-- Matriz de confusión
-- Reporte de clasificación detallado
-- Archivo CSV con resultados
+**Clasificación de texto** — CSV con predicciones por dimensión y, con `--validate`,
+accuracy y reporte de clasificación (precision, recall, F1) por dimensión.
 
-### Clasificación de Imágenes
-El script genera:
-- Archivo JSON con resultados de cada imagen
-- Resumen en consola con estadísticas
-- Timestamp de procesamiento
-- Manejo de errores por imagen
+**Clasificación de imágenes** — JSON con el resultado de cada imagen, resumen en
+consola y manejo de errores por imagen.
 
-Ejemplo de salida JSON:
 ```json
 [
     {
@@ -169,103 +148,59 @@ Ejemplo de salida JSON:
 ]
 ```
 
-## 🎯 Personalización de Prompts
-
-### Para Imágenes
-
-Puedes crear prompts personalizados según tu necesidad:
+## Personalización de prompts
 
 ```python
-# Prompt para clasificación de objetos
 object_prompt = """Identify all objects in this image.
-List them in order of prominence.
-For each object, provide:
-- Name
-- Location in image
-- Estimated size relative to image
-- Color
-
+For each object, provide: name, location, estimated size and color.
 Respond in JSON format."""
-
-# Prompt para análisis de sentimiento visual
-sentiment_prompt = """Analyze the emotional tone of this image.
-Consider:
-- Facial expressions (if any)
-- Color palette
-- Composition
-- Lighting
-
-Rate the emotional valence from 1-10 (1=negative, 10=positive)
-and arousal from 1-10 (1=calm, 10=exciting).
-
-Respond in JSON format with: valence, arousal, description"""
 ```
 
 Consulta [ADVANCED_PROMPTS.md](ADVANCED_PROMPTS.md) para más ejemplos especializados.
 
-## 🔄 Procesamiento por Lotes
+## Procesamiento por lotes
 
 ```python
 from classify_images_with_ollama import OllamaImageClassifier
 
 classifier = OllamaImageClassifier()
-directories = ["dir1", "dir2", "dir3"]
-prompt = "Describe this image briefly"
-
-for dir_path in directories:
-    results = classifier.process_directory(
+for dir_path in ["dir1", "dir2", "dir3"]:
+    classifier.process_directory(
         directory_path=dir_path,
-        prompt=prompt,
+        prompt="Describe this image briefly",
         output_file=f"{dir_path}_results.json"
     )
 ```
 
-## 🛠️ Solución de Problemas
+## Solución de problemas
 
 | Problema | Solución |
 |----------|----------|
-| **Ollama no conecta** | Ejecuta `ollama serve` y verifica con `ollama list` |
-| **Modelo no encontrado** | Instala el modelo: `ollama pull gemma3:27b-it-qat` |
-| **Error de memoria** | Las imágenes se optimizan automáticamente. Reduce el tamaño si persiste |
-| **OpenAI timeout** | Verifica tu conexión e API key. Hay 3 reintentos automáticos |
-| **Dependencias faltantes** | Ejecuta `python check_installation.py` para diagnóstico |
+| Ollama no conecta | Ejecuta `ollama serve` y verifica con `ollama list` |
+| Modelo no encontrado | Instala el modelo: `ollama pull gemma3:27b-it-qat` |
+| Error de memoria | Las imágenes se optimizan automáticamente; reduce el tamaño si persiste |
+| OpenAI timeout | Verifica conexión y API key. Hay 3 reintentos automáticos |
+| Dependencias faltantes | Ejecuta `python check_installation.py` |
 
-## � Documentación Adicional
+## Documentación adicional
 
-- **[QUICKSTART.md](QUICKSTART.md)** - Guía de inicio rápido en 3 pasos
-- **[ADVANCED_PROMPTS.md](ADVANCED_PROMPTS.md)** - 15+ ejemplos de prompts especializados
-- **[check_installation.py](check_installation.py)** - Script de verificación del sistema
-- **[example_usage.py](example_usage.py)** - Ejemplos interactivos
+- [QUICKSTART.md](QUICKSTART.md) — Guía de inicio rápido
+- [ADVANCED_PROMPTS.md](ADVANCED_PROMPTS.md) — Ejemplos de prompts especializados
+- [check_installation.py](check_installation.py) — Verificación del entorno
+- [example_usage.py](example_usage.py) — Ejemplos interactivos
 
-## 🔒 Seguridad
+## Seguridad
 
-- ⚠️ **Nunca subas tu `.env` con API keys al repositorio**
-- ✅ Usa `.env.example` como plantilla
-- ✅ Las API keys deben estar en variables de entorno
-- ✅ Revisa el `.gitignore` antes de hacer commit
+- Nunca subas tu `.env` con API keys al repositorio.
+- Usa `.env.example` como plantilla.
+- Mantén las API keys en variables de entorno.
+- Revisa el `.gitignore` antes de hacer commit.
 
-## 🤝 Contribuciones
+## Licencia
 
-¡Las contribuciones son bienvenidas! Para contribuir:
+Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
 
-1. Fork el repositorio
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+## Agradecimientos
 
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
-## � Agradecimientos
-
-- [Ollama](https://ollama.ai) por proporcionar modelos de visión locales
-- [OpenAI](https://openai.com) por su API de clasificación de texto
-- Comunidad open source por las herramientas y librerías
-
-## 📞 Soporte
-
-- 🐛 **Issues**: [GitHub Issues](https://github.com/tu-usuario/clasificacion-llms/issues)
-- 📖 **Documentación**: Ver archivos `.md` en el repositorio
-- 💬 **Discusiones**: [GitHub Discussions](https://github.com/tu-usuario/clasificacion-llms/discussions)
+- [Ollama](https://ollama.ai) por los modelos de visión locales.
+- [OpenAI](https://openai.com) por su API de clasificación de texto.
