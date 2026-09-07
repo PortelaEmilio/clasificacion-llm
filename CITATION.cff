@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "Si utilizas este software, cita el artículo indicado en preferred-citation."
+title: "Clasificación Automática con LLMs"
+authors:
+  - family-names: "Portela Navarro"
+    given-names: "Emilio"
+repository-code: "https://github.com/PortelaEmilio/clasificacion-llm"
+license: MIT
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Portela Navarro"
+      given-names: "Emilio"
+    - family-names: "Escobar Mercado"
+      given-names: "Modesto"
+  title: "La presentación del yo en Tinder. Un análisis del capital erótico y la identidad mediante inteligencia artificial"
+  journal: "Revista Española de Sociología"
+  year: 2026
+  volume: 35
+  issue: 3
+  start: a306
+  doi: "10.22325/fes/res.2026.306"

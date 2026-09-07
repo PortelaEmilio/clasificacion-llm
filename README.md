@@ -196,6 +196,27 @@ for dir_path in ["dir1", "dir2", "dir3"]:
 - Mantén las API keys en variables de entorno.
 - Revisa el `.gitignore` antes de hacer commit.
 
+## Cómo citar
+
+Si utilizas este software en un trabajo académico, cita el artículo asociado:
+
+> Portela Navarro, E., & Escobar Mercado, M. (2026). La presentación del yo en Tinder. Un análisis del
+> capital erótico y la identidad mediante inteligencia artificial. *Revista Española de Sociología*,
+> *35*(3), a306. https://doi.org/10.22325/fes/res.2026.306
+
+```bibtex
+@article{portela2026tinder,
+  author  = {Portela Navarro, Emilio and Escobar Mercado, Modesto},
+  title   = {La presentación del yo en Tinder. Un análisis del capital erótico y la identidad mediante inteligencia artificial},
+  journal = {Revista Española de Sociología},
+  year    = {2026},
+  volume  = {35},
+  number  = {3},
+  pages   = {a306},
+  doi     = {10.22325/fes/res.2026.306}
+}
+```
+
 ## Licencia
 
 Este proyecto está bajo la Licencia MIT. Ver el archivo [LICENSE](LICENSE) para más detalles.
