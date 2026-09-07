@@ -25,8 +25,8 @@ Clasificación automática de **textos** e **imágenes** mediante modelos de len
 ## Instalación
 
 ```bash
-git clone https://github.com/tu-usuario/clasificacion-llms.git
-cd clasificacion-llms
+git clone https://github.com/PortelaEmilio/clasificacion-llm.git
+cd clasificacion-llm
 pip install -r requirements.txt
 ```
 
